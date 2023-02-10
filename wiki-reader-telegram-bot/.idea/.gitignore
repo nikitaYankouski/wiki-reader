@@ -9,6 +9,7 @@
 
 # IntelliJ
 out/
+.idea/
 
 ### Java ###
 # Compiled class file
