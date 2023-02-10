@@ -1,1 +1,1 @@
-# wiki-reader-telegram-bot
+# wiki-reader
