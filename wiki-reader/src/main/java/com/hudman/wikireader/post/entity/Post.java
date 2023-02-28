@@ -1,10 +1,16 @@
 package com.hudman.wikireader.post.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,4 +24,10 @@ public class Post {
 
     @Column(name = "date_post")
     private LocalDateTime datePost;
+
+    public Post(long articleId, String name, LocalDateTime datePost) {
+        this.articleId = articleId;
+        this.name = name;
+        this.datePost = datePost;
+    }
 }
