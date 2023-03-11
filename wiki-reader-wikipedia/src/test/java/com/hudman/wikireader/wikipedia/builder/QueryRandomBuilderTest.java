@@ -1,7 +1,5 @@
-package com.hudman.wikireader.wikipedia;
+package com.hudman.wikireader.wikipedia.builder;
 
-import com.hudman.wikireader.wikipedia.builder.Language;
-import com.hudman.wikireader.wikipedia.builder.QueryRandomBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.net.URISyntaxException;
