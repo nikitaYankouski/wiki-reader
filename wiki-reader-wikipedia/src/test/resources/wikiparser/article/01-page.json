@@ -1,0 +1,41 @@
+{
+  "continue": {
+    "excontinue": 2,
+    "continue": "||"
+  },
+  "warnings": {
+    "extracts": {
+      "warnings": "\"exlimit\" was too large for a whole article extracts request, lowered to 1."
+    }
+  },
+  "query": {
+    "pages": [
+      {
+        "pageid": 3752653,
+        "ns": 0,
+        "title": "Junebug (film)"
+      },
+      {
+        "pageid": 36554043,
+        "ns": 0,
+        "title": "Sore dewa, Mata Ashita",
+        "extract": "\"Sore dewa, Mata Ashita\" (それでは、また明日, Well Then, See You Tomorrow)) is a song by Japanese rock band Asian Kung-Fu Generation. It was released on July 25, 2012 and reached number 11 on the Oricon charts. It was used as the theme song for Road to Ninja: Naruto the Movie and one of the 3 songs by Asian Kung-Fu Generation used in Naruto media, alongside Haruka Kanata, and Blood Circulator. The song was ranked 9th on fans request for the band's 10th anniversary live setlist on September 14, 2013.\n\n\n== Music video ==\nThe music video features all activities in loop. Band members appear in different scenes; Gotoh rotate from left to right while singing, Kita playing guitar next to boy who throw baseball in repeat, Yamada playing bass in a room, and Ijichi playing drum with balls falling behind him.\n\n\n== Track listing ==\n\n\n== Personnel ==\nMasafumi Gotō – lead vocals, rhythm guitar\nKensuke Kita – lead guitar, background vocals\nTakahiro Yamada –  bass, background vocals\nKiyoshi Ijichi – drums\nAsian Kung-Fu Generation – producer\n\n\n== Charts ==\n\n\n== References =="
+      },
+      {
+        "pageid": 51135969,
+        "ns": 0,
+        "title": "Gilbert Nicolas"
+      },
+      {
+        "pageid": 58143961,
+        "ns": 0,
+        "title": "IlvH RNA motif"
+      },
+      {
+        "pageid": 62576755,
+        "ns": 0,
+        "title": "1958–59 St. Francis Terriers men's basketball team"
+      }
+    ]
+  }
+}

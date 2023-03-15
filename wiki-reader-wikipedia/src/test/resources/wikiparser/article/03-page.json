@@ -1,0 +1,41 @@
+{
+  "continue": {
+    "excontinue": 4,
+    "continue": "||"
+  },
+  "warnings": {
+    "extracts": {
+      "warnings": "\"exlimit\" was too large for a whole article extracts request, lowered to 1."
+    }
+  },
+  "query": {
+    "pages": [
+      {
+        "pageid": 3752653,
+        "ns": 0,
+        "title": "Junebug (film)"
+      },
+      {
+        "pageid": 36554043,
+        "ns": 0,
+        "title": "Sore dewa, Mata Ashita"
+      },
+      {
+        "pageid": 51135969,
+        "ns": 0,
+        "title": "Gilbert Nicolas"
+      },
+      {
+        "pageid": 58143961,
+        "ns": 0,
+        "title": "IlvH RNA motif",
+        "extract": "The ilvH RNA motif is a conserved RNA structure that was discovered by bioinformatics.ilvH motifs are found in Betaproteobacteria.\nilvH motif RNAs likely function as cis-regulatory elements, in view of their positions upstream of protein-coding genes.  Specifically, the RNAs are upstream of genes that encode a predicted acetolactate synthase, which is involved in the synthesis of branched-chain amino acids.\n\n\n== References =="
+      },
+      {
+        "pageid": 62576755,
+        "ns": 0,
+        "title": "1958–59 St. Francis Terriers men's basketball team"
+      }
+    ]
+  }
+}
