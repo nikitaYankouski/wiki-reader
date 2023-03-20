@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class QueryRandomBuilderTest {
-
     @Test
     void checkBuildURI() throws URISyntaxException {
         final var uri = QueryRandomBuilder.build(Language.ENGLISH, "10");

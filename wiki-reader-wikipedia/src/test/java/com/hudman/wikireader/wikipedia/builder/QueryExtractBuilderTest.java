@@ -7,7 +7,6 @@ import java.net.URISyntaxException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class QueryExtractBuilderTest {
-
     int[] pageId = new int[] { 58143961, 62576755, 3752653, 36554043, 51135969 };
 
     @Test
