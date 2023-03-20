@@ -3,6 +3,8 @@ package com.hudman.wikireader.wikipedia.parser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
+import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -26,7 +28,11 @@ public class WikiParserTest {
     Configuration configuration;
 
     WikiParserTest() {
-        configuration = mock(Configuration.class);
+        configuration = com.jayway.jsonpath.Configuration
+                .builder()
+                .jsonProvider(new JacksonJsonProvider())
+                .mappingProvider(new JacksonMappingProvider())
+                .build();
         this.wikiParser = new WikiParser(new ObjectMapper(), configuration);
     }
 
@@ -37,8 +43,9 @@ public class WikiParserTest {
         final var json = uploadTestData(List.of("wikiparser/randomarticle/00-random.json"));
         final var randomArticle = wikiParser.parseToRandomArticle(json.get(0));
 
-        assertEquals(40284997, randomArticle.get(0).getId());
-        assertEquals("The Badminton Game", randomArticle.get(2).getTitle());
+        assertEquals(40284997, randomArticle.get(0));
+        assertEquals(63834655, randomArticle.get(1));
+        assertEquals(54246063, randomArticle.get(2));
     }
 
     @Test

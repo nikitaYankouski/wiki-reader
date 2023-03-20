@@ -1,10 +1,8 @@
 package com.hudman.wikireader.wikipedia.parser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hudman.wikireader.wikipedia.response.Article;
-import com.hudman.wikireader.wikipedia.response.RandomArticle;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import org.springframework.stereotype.Component;
@@ -19,16 +17,15 @@ public class WikiParser {
 
     private Configuration configuration;
 
-    private static final String POINTER_RANDOM = "/query/random";
+    private static final String PATH_RANDOM = "$.query.random[*].id";
 
     WikiParser(ObjectMapper objectMapper, Configuration configuration) {
         this.mapper = objectMapper;
         this.configuration = configuration;
     }
 
-    public List<RandomArticle> parseToRandomArticle(String json) throws JsonProcessingException {
-        final var jsonDeep = toDeep(json, POINTER_RANDOM);
-        return mapper.readValue(jsonDeep, new TypeReference<>() {});
+    public List<Integer> parseToRandomArticle(String json) {
+        return JsonPath.using(configuration).parse(json).read(PATH_RANDOM);
     }
 
     public List<Article> parseToArticle(List<String> json) {

@@ -1,7 +1,10 @@
 package com.hudman.wikireader.wikipedia.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hudman.wikireader.wikipedia.builder.Language;
+import com.hudman.wikireader.wikipedia.builder.QueryExtractBuilder;
 import com.hudman.wikireader.wikipedia.builder.QueryRandomBuilder;
+import com.hudman.wikireader.wikipedia.parser.WikiParser;
 import com.hudman.wikireader.wikipedia.response.Article;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -13,21 +16,27 @@ import java.util.List;
 public class WikipediaClient {
     private RestTemplate restTemplate;
 
-    WikipediaClient(RestTemplate restTemplate) {
+    private WikiParser wikiParser;
+
+    WikipediaClient(RestTemplate restTemplate, WikiParser wikiParser) {
         this.restTemplate = restTemplate;
+        this.wikiParser = wikiParser;
     }
 
-    public List<Long> getIdOfRandomArticle(Language language, String rnNameSpace, String rnLimit) {
+    public List<Integer> getIdOfRandomArticle(Language language, String rnLimit) {
         try {
-            var uri = QueryRandomBuilder.build(language, rnNameSpace, rnLimit);
-            restTemplate.getForEntity(uri, Article.class);
-        } catch (URISyntaxException ex) {
+            final var uri = QueryRandomBuilder.build(language, rnLimit);
+            final var responseWiki = restTemplate.getForEntity(uri, String.class);
 
+            final var body = responseWiki.getBody();
+            return wikiParser.parseToRandomArticle(body);
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
         }
         return null;
     }
 
-    public List<Article> getChosenArticleById() {
+    public List<Article> getChosenArticleById(Language language, List<Integer> id) {
         return null;
     }
 

@@ -10,8 +10,9 @@ public class QueryRandomBuilder {
     private final static String FORMAT = "json";
     private final static String LIST = "random";
     private final static String FORMAT_VERSION = "latest";
+    private final static String RN_NAME_SPASE = "0";
 
-    public static URI build(Language language, String rnNameSpace, String rnLimit) throws URISyntaxException {
+    public static URI build(Language language, String rnLimit) throws URISyntaxException {
         var host = language.getValue() + "." + "wikipedia.org";
         return new URIBuilder()
                 .setScheme("https")
@@ -21,7 +22,7 @@ public class QueryRandomBuilder {
                 .setParameter("format", FORMAT)
                 .setParameter("list", LIST)
                 .setParameter("formatversion", FORMAT_VERSION)
-                .setParameter("rnnamespace", rnNameSpace)
+                .setParameter("rnnamespace", RN_NAME_SPASE)
                 .setParameter("rnlimit", rnLimit)
                 .build();
     }
