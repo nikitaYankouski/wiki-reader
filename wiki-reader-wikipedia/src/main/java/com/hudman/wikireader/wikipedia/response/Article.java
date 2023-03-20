@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(value = "ns")
 public class Article {
     @JsonProperty("pageid")
-    private long id;
+    private int id;
     private String title;
     @JsonProperty("extract")
     private String content;
