@@ -4,6 +4,9 @@ import org.apache.hc.core5.net.URIBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class QueryExtractBuilder {
     private final static String ACTION = "query";
@@ -13,47 +16,34 @@ public class QueryExtractBuilder {
     private final static String EXPLAIN_TEXT = "1";
     private final static String EXSECTION_FORMAT = "wiki";
 
-    public static URI build(Language language, long[] pageId) throws URISyntaxException {
+    public static List<URI> build(Language language, int[] pageId) throws URISyntaxException {
         var host = language.getValue() + "." + "wikipedia.org";
         var connectedPageId = concatPadeId(pageId);
 
-        return new URIBuilder()
-                .setScheme("https")
-                .setHost(host)
-                .setPath("/w/api.php")
-                .setParameter("action", ACTION)
-                .setParameter("format", FORMAT)
-                .setParameter("prop", PROP)
-                .setParameter("pageids", connectedPageId)
-                .setParameter("formatversion", FORMAT_VERSION)
-                .setParameter("explaintext", EXPLAIN_TEXT)
-                .setParameter("exsectionformat", EXSECTION_FORMAT)
-                .build();
+        final var builders = IntStream.range(0, pageId.length)
+                .mapToObj(it -> new URIBuilder()
+                    .setScheme("https")
+                    .setHost(host)
+                    .setPath("/w/api.php")
+                    .setParameter("action", ACTION)
+                    .setParameter("format", FORMAT)
+                    .setParameter("prop", PROP)
+                    .setParameter("continue", "||")
+                    .setParameter("pageids", connectedPageId)
+                    .setParameter("formatversion", FORMAT_VERSION)
+                    .setParameter("explaintext", EXPLAIN_TEXT)
+                    .setParameter("exsectionformat", EXSECTION_FORMAT)
+                    .setParameter("excontinue", String.valueOf(it)))
+                .toList();
+
+        List<URI> response = new ArrayList<>();
+        for (var builder : builders) {
+            response.add(builder.build());
+        }
+        return response;
     }
 
-    public static URI buildContinue(URI uri, long[] pageId, int number) throws URISyntaxException {
-        var scheme = uri.getScheme();
-        var host = uri.getHost();
-        var path = uri.getPath();
-        var connectedPageId = concatPadeId(pageId);
-
-        return new URIBuilder()
-                .setScheme(scheme)
-                .setHost(host)
-                .setPath(path)
-                .setParameter("action", ACTION)
-                .setParameter("format", FORMAT)
-                .setParameter("prop", PROP)
-                .setParameter("continue", "||")
-                .setParameter("pageids", connectedPageId)
-                .setParameter("formatversion", FORMAT_VERSION)
-                .setParameter("explaintext", EXPLAIN_TEXT)
-                .setParameter("exsectionformat", EXSECTION_FORMAT)
-                .setParameter("excontinue", String.valueOf(number))
-                .build();
-    }
-
-    private static String concatPadeId(long[] pageId) {
+    private static String concatPadeId(int[] pageId) {
         var response = new StringBuilder();
         for (int count = 0; count < pageId.length; count++) {
             response.append(pageId[count]);
