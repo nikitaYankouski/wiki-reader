@@ -11,15 +11,12 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @Component
-public class WikiParser {
-
+public class WikipediaParser {
     private ObjectMapper mapper;
-
     private Configuration configuration;
-
     private static final String PATH_RANDOM = "$.query.random[*].id";
 
-    WikiParser(ObjectMapper objectMapper, Configuration configuration) {
+    WikipediaParser(ObjectMapper objectMapper, Configuration configuration) {
         this.mapper = objectMapper;
         this.configuration = configuration;
     }
@@ -35,7 +32,7 @@ public class WikiParser {
         }).toList();
     }
 
-    private String toDeep(String json, String path) throws JsonProcessingException {
-        return mapper.readTree(json).at(path).toPrettyString();
+    public String parseToJson(List<Article> articleList) throws JsonProcessingException {
+        return mapper.writeValueAsString(articleList);
     }
 }

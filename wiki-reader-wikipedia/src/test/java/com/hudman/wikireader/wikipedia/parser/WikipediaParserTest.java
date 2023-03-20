@@ -2,6 +2,7 @@ package com.hudman.wikireader.wikipedia.parser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hudman.wikireader.wikipedia.response.Article;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
@@ -21,33 +22,46 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
-public class WikiParserTest {
+public class WikipediaParserTest {
 
-    WikiParser wikiParser;
+    WikipediaParser wikipediaParser;
 
     Configuration configuration;
 
-    WikiParserTest() {
+    WikipediaParserTest() {
         configuration = com.jayway.jsonpath.Configuration
                 .builder()
                 .jsonProvider(new JacksonJsonProvider())
                 .mappingProvider(new JacksonMappingProvider())
                 .build();
-        this.wikiParser = new WikiParser(new ObjectMapper(), configuration);
+        this.wikipediaParser = new WikipediaParser(new ObjectMapper(), configuration);
     }
 
-    static final ClassLoader classLoader = WikiParserTest.class.getClassLoader();
+    static final ClassLoader classLoader = WikipediaParserTest.class.getClassLoader();
 
     @Test
-    void checkParseToRandomArticle() throws JsonProcessingException {
+    void checkParseToRandomArticle() {
         final var json = uploadTestData(List.of("wikiparser/randomarticle/00-random.json"));
-        final var randomArticle = wikiParser.parseToRandomArticle(json.get(0));
+        final var randomArticle = wikipediaParser.parseToRandomArticle(json.get(0));
 
         assertEquals(40284997, randomArticle.get(0));
         assertEquals(63834655, randomArticle.get(1));
         assertEquals(54246063, randomArticle.get(2));
     }
+    @Test
+    void checkParseToJson() throws JsonProcessingException {
+        final var articleList =
+                List.of(
+                        new Article(322323, "title_0", "content_0"),
+                        new Article(432432, "title_1", "content_1"),
+                        new Article(903292, "title_2", "content_2")
+                );
 
+        final var response = wikipediaParser.parseToJson(articleList);
+        final var expected = "[{\"title\":\"title_0\",\"pageid\":322323,\"extract\":\"content_0\"},{\"title\":\"title_1\",\"pageid\":432432,\"extract\":\"content_1\"},{\"title\":\"title_2\",\"pageid\":903292,\"extract\":\"content_2\"}]";
+
+        assertEquals(expected, response);
+    }
     @Test
     void checkParseToArticle() {
         final var listPath = Arrays.asList(
@@ -59,7 +73,7 @@ public class WikiParserTest {
         );
 
         final var json = uploadTestData(listPath);
-        final var actual = wikiParser.parseToArticle(json);
+        final var actual = wikipediaParser.parseToArticle(json);
 
         assertEquals("Junebug (film)", actual.get(0).getTitle());
         assertTrue(actual.get(0).getContent().startsWith("Junebug is a 2005 American comedy-drama"));
